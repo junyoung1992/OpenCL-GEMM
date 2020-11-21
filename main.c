@@ -10,13 +10,13 @@ void vec_mul_opencl(const float* A, const float* B, float* C, const int ROW_A, c
 
 clock_t start, end;
 size_t kernel_source_size;
-const char* kernel_source = get_source_code("kernel.cl", &kernel_source_size);
-const int TS{ 16 }, WPT{ 8 };
+char* kernel_source;
+const int TS = 16 , WPT = 8 ;
 
 int main() {
 	float* A, * B, * C_seq, * C_opencl;
-	int equal{ 1 };
-	const int ROW_A{ 1024 }, COL_A{ 1024 }, ROW_B{ 1024 }, COL_B{ 1024 };
+	int equal = 1 ;
+	const int ROW_A = 1024, COL_A = 1024, ROW_B = 1024, COL_B = 1024;
 	
 	A = (float*)malloc(sizeof(float) * ROW_A * COL_A);
 	B = (float*)malloc(sizeof(float) * ROW_B * COL_B);
@@ -24,14 +24,15 @@ int main() {
 	C_opencl = (float*)malloc(sizeof(float) * ROW_A * COL_B);
 
 	srand(time(NULL));
-	for (int i = 0; i < ROW_A * COL_A; i++) A[i] = float(rand() % 100) / 100;
-	for (int i = 0; i < ROW_B * COL_B; i++) B[i] = float(rand() % 100) / 100;
+	for (int i = 0; i < ROW_A * COL_A; i++) A[i] = (float)(rand() % 100) / 100;
+	for (int i = 0; i < ROW_B * COL_B; i++) B[i] = (float)(rand() % 100) / 100;
 
 	printf("Sequential version...\n");
 	vec_mul_seq(A, B, C_seq, ROW_A, COL_A, COL_B, 1);
 	printf("\n");
 
 	printf("OpenCL version...\n");
+	kernel_source =  get_source_code("kernel.cl", &kernel_source_size);
 	for (int i = 1; i <= 4; i++)
 		vec_mul_opencl(A, B, C_opencl, ROW_A, COL_A, COL_B, i);
 
@@ -71,7 +72,7 @@ char* get_source_code(const char* file_name, size_t* len) {
 	rewind(file);
 
 	source_code = (char*)malloc(length + 1);
-	fread(source_code, length, 1, file);
+	(void)!fread(source_code, length, 1, file);
 
 	for (int i = 0; i < length; i++) {
 		buf[0] = source_code[i];

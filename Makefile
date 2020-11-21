@@ -1,6 +1,6 @@
 CC 		= gcc
 CFLAGS	= -O3
-OBJECT	= main.cpp
+OBJECT	= main.c
 TARGET	= gemm
 
 LIB_NAMES 				 = -lOpenCL -lm
