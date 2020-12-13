@@ -45,7 +45,7 @@ __kernel void vec_mul_3(const __global float *A,
 
     __local float Asub[TS][TS];
     __local float Bsub[TS][TS];
-    
+
     float sum = 0.0f;
 
     for (int t = 0; t < COL_A; t += TS)
@@ -100,7 +100,7 @@ __kernel void vec_mul_4(const __global float *A,
 
     __local float Asub[TS][TS];
     __local float Bsub[TS][TS];
-    
+
     const int RTS = TS / WPT;
     float sum[WPT] = {0.0f};
 

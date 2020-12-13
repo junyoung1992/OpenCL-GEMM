@@ -21,7 +21,7 @@ int main() {
     float* A, * B, * C_seq, * C_opencl;
     int equal = 1 ;
     const int ROW_A = 1024, COL_A = 1024, ROW_B = 1024, COL_B = 1024;
-    
+
     A = (float*)malloc(sizeof(float) * ROW_A * COL_A);
     B = (float*)malloc(sizeof(float) * ROW_B * COL_B);
     C_seq = (float*)malloc(sizeof(float) * ROW_A * COL_B);
@@ -60,10 +60,6 @@ int main() {
     }
 
 char* get_source_code(const char* file_name, size_t* len) {
-    char* source_code;
-    char buf[2] = "\0";
-    int cnt = 0;
-    size_t length;
     FILE* file = fopen(file_name, "r");
 
     if (file == NULL) {
@@ -72,20 +68,14 @@ char* get_source_code(const char* file_name, size_t* len) {
     }
 
     fseek(file, 0, SEEK_END);
-    length = (size_t)ftell(file);
+    size_t length = (size_t)ftell(file);
     rewind(file);
 
-    source_code = (char*)malloc(length + 1);
-    (void)!fread(source_code, length, 1, file);
-
-    for (int i = 0; i < length; i++) {
-        buf[0] = source_code[i];
-        if (buf[0] == '\n') {
-            cnt++;
-        }
-    }
-
+    char* source_code = (char*)malloc(length + 1);
+    fread(source_code, length, 1, file);
+    source_code[length] = '\0';
     fclose(file);
+    *len = length;
 
     return source_code;
 }

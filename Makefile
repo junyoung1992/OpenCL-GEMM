@@ -1,4 +1,4 @@
-CC = gcc
+CC     = gcc
 CFLAGS = -O3
 OBJECT = main.c
 TARGET = gemm
@@ -11,12 +11,11 @@ DIR_LIB_NVIDIA_OPENCL    = -L/usr/local/cuda/lib64/
 DIR_HEADER_NVIDIA_OPENCL = -I/usr/local/cuda/include/
 
 clean:
-	rm -f *.o
-	rm -f $(TARGET)
+    rm -f *.o
+    rm -f $(TARGET)
 
 intel:
-	$(CC) -o $(TARGET) $(OBJECT) $(CFLAGS) $(LIB_NAMES) $(DIR_LIB_INTEL_OPENCL) $(DIR_HEADER_INTEL_OPENCL)
-            
-nvidia: 
-	$(CC) -o $(TARGET) $(OBJECT) $(CFLAGS) $(LIB_NAMES) $(DIR_LIB_NVIDIA_OPENCL) $(DIR_HEADER_NVIDIA_OPENCL)
+    $(CC) -o $(TARGET) $(OBJECT) $(CFLAGS) $(LIB_NAMES) $(DIR_LIB_INTEL_OPENCL) $(DIR_HEADER_INTEL_OPENCL)
 
+nvidia:
+    $(CC) -o $(TARGET) $(OBJECT) $(CFLAGS) $(LIB_NAMES) $(DIR_LIB_NVIDIA_OPENCL) $(DIR_HEADER_NVIDIA_OPENCL)
